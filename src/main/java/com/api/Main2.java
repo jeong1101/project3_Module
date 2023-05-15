@@ -35,7 +35,7 @@ public class Main2 {
                 ((apiAdd)add ).add_API(userid, AD_data, accountSeq);
 
                 // 사용자 부서 변경
-                ((userModify) modify).user_modify(userid, AD_data, accountSeq);
+                ((userModify) modify).user_Modify(userid, AD_data, accountSeq);
 
             }
 

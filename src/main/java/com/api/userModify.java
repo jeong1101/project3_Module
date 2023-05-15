@@ -9,114 +9,70 @@ import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-public class userModify  extends Thread{
-    public static void user_modify(JSONObject userid, JSONObject AD_data, String accountSeq) throws ParseException {
-        Thread user_inactive = new userInactive();
-        Thread getadusers = new getADUsers();
-        JSONObject all_user = new JSONObject();
-        all_user = ((getADUsers) getadusers).get_ADUsers();
+public class userModify extends Thread {
+    public static void user_Modify(JSONObject userid, JSONObject AD_data, String accountSeq) throws ParseException {
+        Thread userInactive = new userInactive();
+        Thread getADUsers = new getADUsers();
+        JSONObject allUsers = ((getADUsers) getADUsers).get_ADUsers();
         JSONParser parser = new JSONParser();
-        JSONObject jsonObj1 = (JSONObject) parser.parse(userid.toString());
-        JSONObject jsonObj2 = (JSONObject) parser.parse(all_user.toString());
-        JSONArray jsonarry1 = (JSONArray) jsonObj1.get("result");
-        JSONObject update_data = new JSONObject();
+        JSONArray jsonArr1 = (JSONArray) parser.parse(userid.toString());
+        JSONObject updateData = new JSONObject();
         JSONArray roles = new JSONArray();
+        roles.add("DEVOPS");
         int count = 0;
-        roles.add(0, "DEVOPS");
 
-        for (int i=0; i<jsonarry1.size(); i++){
-            JSONObject API_user = (JSONObject) jsonarry1.get(Integer.parseInt(Integer.toString(i)));
-            String API_user_id = API_user.get("userId").toString();
-            String API_user_department;
-            API_user_department = "null";
-            if(API_user.containsKey("userDepartment")){
-                API_user_department = API_user.get("userDepartment").toString();
-            }
-            for (int j=0; j<jsonObj2.size(); j++){
-                JSONObject AD_user = (JSONObject) jsonObj2.get(Integer.toString(j));
-                String AD_user_department = AD_user.get("userDepartment").toString();
-                String AD_user_id = AD_user.get("userId").toString();
-                //System.out.println(AD_user);
-                if(API_user_id.equals(AD_user_id)){
-                    if (!API_user_department.equals(AD_user_department)){
-                        System.out.println(AD_user);
-                        update_data.put(count, AD_user);
-                        AD_user.put("roles", roles);
-                        count = count + 1;
+        for (Object obj : jsonArr1) {
+            JSONObject apiUser = (JSONObject) obj;
+            String apiUserId = apiUser.get("userId").toString();
+            String apiUserDepartment = apiUser.containsKey("userDepartment") ? apiUser.get("userDepartment").toString() : "null";
 
-                        URL url = null;
-                        String readLine = null;
-                        StringBuilder buffer = null;
-                        OutputStream outputStream = null;
-                        BufferedReader bufferedReader = null;
-                        BufferedWriter bufferedWriter = null;
-                        HttpURLConnection urlConnection = null;
-                        String api_url = System.getenv("API_URL");
+            for (Object adUserObj : allUsers.values()) {
+                JSONObject adUser = (JSONObject) adUserObj;
+                String adUserDepartment = adUser.get("userDepartment").toString();
+                String adUserId = adUser.get("userId").toString();
 
-                        int connTimeout = 5000;
-                        int readTimeout = 3000;
+                if (apiUserId.equals(adUserId) && !apiUserDepartment.equals(adUserDepartment)) {
+                    System.out.println(adUser);
+                    updateData.put(count, adUser);
+                    adUser.put("roles", roles);
+                    count++;
 
-                        String sendData = AD_user.toString();
-                        String apiUrl = api_url + "/api/account/" + accountSeq + "/user/" + API_user.get("userSeq");
+                    try {
+                        URL url = new URL(System.getenv("API_URL") + "/api/account/" + accountSeq + "/user/" + apiUser.get("userSeq"));
+                        HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+                        connection.setRequestMethod("PUT");
+                        connection.setRequestProperty("user-id", "1");
+                        connection.setRequestProperty("user-role", "ADMIN");
+                        connection.setRequestProperty("Content-Type", "application/json;");
+                        connection.setDoOutput(true);
 
-                        try
-                        {
-                            url = new URL(apiUrl);
-
-                            urlConnection = (HttpURLConnection)url.openConnection();
-                            urlConnection.setRequestMethod("PUT");
-                            urlConnection.setConnectTimeout(connTimeout);
-                            urlConnection.setReadTimeout(readTimeout);
-                            urlConnection.setRequestProperty("user-id", "1");
-                            urlConnection.setRequestProperty("user-role", "ADMIN");
-                            urlConnection.setRequestProperty("Content-Type", "application/json;");
-                            urlConnection.setDoOutput(true);
-                            urlConnection.setInstanceFollowRedirects(true);
-
-                            outputStream = urlConnection.getOutputStream();
-
-                            bufferedWriter = new BufferedWriter(new OutputStreamWriter(outputStream,"UTF-8"));
-                            bufferedWriter.write(sendData);
-                            bufferedWriter.flush();
-
-                            buffer = new StringBuilder();
-                            if(urlConnection.getResponseCode() == HttpURLConnection.HTTP_OK)
-                            {
-                                bufferedReader = new BufferedReader(new InputStreamReader(urlConnection.getInputStream(),"UTF-8"));
-                                while((readLine = bufferedReader.readLine()) != null)
-                                {
-                                    buffer.append(readLine).append("\n");
-                                }
-                            }
-                            else
-                            {
-                                buffer.append("\"code\" : \""+urlConnection.getResponseCode()+"\"");
-                                buffer.append(", \"message\" : \""+urlConnection.getResponseMessage()+"\"");
-                            }
+                        try (OutputStream outputStream = connection.getOutputStream();
+                             BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(outputStream, "UTF-8"))) {
+                            writer.write(adUser.toString());
+                            writer.flush();
                         }
-                        catch(Exception ex)
-                        {
-                            ex.printStackTrace();
-                        }
-                        finally
-                        {
-                            try
-                            {
-                                if (bufferedWriter != null) { bufferedWriter.close(); }
-                                if (outputStream != null) { outputStream.close(); }
-                                if (bufferedReader != null) { bufferedReader.close(); }
-                            }
-                            catch(Exception ex)
-                            {
-                                ex.printStackTrace();
+
+                        StringBuilder response = new StringBuilder();
+                        try (BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream(), "UTF-8"))) {
+                            String line;
+                            while ((line = reader.readLine()) != null) {
+                                response.append(line).append("\n");
                             }
                         }
 
-                        System.out.println("결과 : " + buffer.toString());
+                        if (connection.getResponseCode() == HttpURLConnection.HTTP_OK) {
+                            System.out.println("결과: " + response.toString());
+                        } else {
+                            System.out.println("\"code\": \"" + connection.getResponseCode() + "\"");
+                            System.out.println("\"message\": \"" + connection.getResponseMessage() + "\"");
+                        }
+                    } catch (IOException ex) {
+                        ex.printStackTrace();
                     }
                 }
             }
         }
-        ((userInactive) user_inactive).user_Inactive(userid, update_data, accountSeq);
+
+        ((userInactive) userInactive).user_Inactive(userid, updateData, accountSeq);
     }
 }
