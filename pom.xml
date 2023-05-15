@@ -54,7 +54,7 @@
                 <configuration>
                     <archive>
                         <manifest>
-                            <mainClass>com.Module.Main</mainClass>
+                            <mainClass>com.api.Main2</mainClass>
                         </manifest>
                     </archive>
                 </configuration>
