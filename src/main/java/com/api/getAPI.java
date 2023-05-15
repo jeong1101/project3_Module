@@ -83,8 +83,8 @@ public class getAPI extends Thread{
             userId.put(i,id);
         }
 
-        System.out.println(userId);
-        return userId;
+        //System.out.println(userId);
+        return jsonObject;
     }
 
 }

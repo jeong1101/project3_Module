@@ -10,18 +10,23 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 
 public class userModify extends Thread {
-    public static void user_Modify(JSONObject userid, JSONObject AD_data, String accountSeq) throws ParseException {
+    public static void user_Modify(JSONObject userId, JSONObject data, String accountSeq) throws ParseException {
+        // class
         Thread userInactive = new userInactive();
         Thread getADUsers = new getADUsers();
         JSONObject allUsers = ((getADUsers) getADUsers).get_ADUsers();
         JSONParser parser = new JSONParser();
-        JSONArray jsonArr1 = (JSONArray) parser.parse(userid.toString());
-        JSONObject updateData = new JSONObject();
-        JSONArray roles = new JSONArray();
-        roles.add("DEVOPS");
-        int count = 0;
 
-        for (Object obj : jsonArr1) {
+        JSONObject jsonObj1 = (JSONObject) parser.parse(userId.toString());
+        JSONObject jsonObj2 = (JSONObject) parser.parse(allUsers.toString());
+        JSONArray jsonarry1 = (JSONArray) jsonObj1.get("result");
+
+        JSONObject update = new JSONObject();
+        JSONArray roles = new JSONArray();
+        int count = 0;
+        roles.add(0, "DEVOPS");
+
+        for (Object obj : jsonarry1) {
             JSONObject apiUser = (JSONObject) obj;
             String apiUserId = apiUser.get("userId").toString();
             String apiUserDepartment = apiUser.containsKey("userDepartment") ? apiUser.get("userDepartment").toString() : "null";
@@ -33,7 +38,7 @@ public class userModify extends Thread {
 
                 if (apiUserId.equals(adUserId) && !apiUserDepartment.equals(adUserDepartment)) {
                     System.out.println(adUser);
-                    updateData.put(count, adUser);
+                    update.put(count, adUser);
                     adUser.put("roles", roles);
                     count++;
 
@@ -73,6 +78,6 @@ public class userModify extends Thread {
             }
         }
 
-        ((userInactive) userInactive).user_Inactive(userid, updateData, accountSeq);
+        ((userInactive) userInactive).user_Inactive(userId, update, accountSeq);
     }
 }

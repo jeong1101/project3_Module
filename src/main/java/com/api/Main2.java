@@ -5,8 +5,9 @@ import org.json.simple.JSONObject;
 
 public class Main2 {
     public static void main(String[] args) {
-        JSONObject userid;
-        JSONObject AD_data;
+        System.out.println("-------- start -------");
+        JSONObject userId;
+        JSONObject Datas;
         JSONObject seq_obj;
         String accountSeq;
 
@@ -26,18 +27,19 @@ public class Main2 {
                 accountSeq = seq_obj.get(i).toString();
 
                 //cocktail api 서버에서 사용자 정보 가져옴
-                userid = ((com.api.getAPI) getAPI).get_API(accountSeq);
+                userId = ((com.api.getAPI) getAPI).get_API(accountSeq);
 
                 //ad 서버에서 사용자 정보 가져오기
-                AD_data = ((getAD) getad).get_AD();
+                Datas = ((getAD) getad).get_AD();
 
                 //사용자 등록
-                ((apiAdd)add ).add_API(userid, AD_data, accountSeq);
+                ((apiAdd)add ).add_API(userId, Datas, accountSeq);
 
                 // 사용자 부서 변경
-                ((userModify) modify).user_Modify(userid, AD_data, accountSeq);
+                ((userModify) modify).user_Modify(userId, Datas, accountSeq);
 
             }
+            System.out.println("-------- end ---------");
 
         }catch (Exception e){
             e.printStackTrace();

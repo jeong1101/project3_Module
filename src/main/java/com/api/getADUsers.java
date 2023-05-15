@@ -19,7 +19,6 @@ public class getADUsers extends Thread{
 
         // buffer
         StringBuilder sb = null;
-
         BufferedReader br = null;
 
         // HttpURLConnection

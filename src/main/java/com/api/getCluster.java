@@ -82,7 +82,7 @@ public class getCluster extends Thread {
             String accountSeq = account.get("accountSeq").toString();
             seq_obj.put(i,accountSeq);
         }//for
-        System.out.println(seq_obj);
+        //System.out.println(seq_obj);
         return seq_obj;
     }
 

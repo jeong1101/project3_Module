@@ -11,82 +11,94 @@ import java.net.URL;
 
 
 public class apiAdd extends Thread {
-    public static void add_API(JSONObject userid, JSONObject AD_data, String accountSeq) throws ParseException {
+    public static void add_API(JSONObject userId, JSONObject Datas, String accountSeq) throws ParseException {
+
+        //JSONObject
         JSONObject new_userid;
+
+        //참조 class
         Thread apiUser_inactive = new userInactive();
         Thread apiUser_get = new getAPI();
+
+        //JSONParser
         JSONParser parser = new JSONParser();
-        JSONObject jsonObj1 = (JSONObject) parser.parse(userid.toString());
-        JSONObject jsonObj2 = (JSONObject) parser.parse(AD_data.toString());
+        JSONObject jsonObj1 = (JSONObject) parser.parse(userId.toString());
+        JSONObject jsonObj2 = (JSONObject) parser.parse(Datas.toString());
         JSONArray jsonarry1 = (JSONArray) jsonObj1.get("result");
-        JSONObject update_data = new JSONObject();
+        JSONObject update = new JSONObject();
         JSONArray roles = new JSONArray();
         roles.add(0, "DEVOPS");
 
         for (int i=0; i<jsonObj2.size(); i++){
-            int num = 0;
+            int count = 0;
             JSONObject AD_user = (JSONObject) jsonObj2.get(Integer.toString(i));
             String AD_user_id = AD_user.get("userId").toString();
             for (int j=0; j<jsonarry1.size(); j++){
                 JSONObject API_user = (JSONObject) jsonarry1.get(Integer.parseInt(Integer.toString(j)));
                 String API_user_id = API_user.get("userId").toString();
                 if (API_user_id.equals(AD_user_id)){
-                    num = num + 1;
+                    count = count + 1;
                 }
             }
-            if (num == 0){
+            if (count == 0){
                 AD_user.put("roles", roles);
                 System.out.println(AD_user);
-                update_data.put(num, AD_user);
+                update.put(count, AD_user);
 
+                //URL
                 URL url = null;
+
+                // buffer
                 String readLine = null;
-                StringBuilder buffer = null;
-                OutputStream outputStream = null;
-                BufferedReader bufferedReader = null;
-                BufferedWriter bufferedWriter = null;
-                HttpURLConnection urlConnection = null;
-                String api_url = System.getenv("API_URL");
+                StringBuilder sb = null;
+                OutputStream out = null;
+                BufferedReader br = null;
+                BufferedWriter bw = null;
 
-                int connTimeout = 5000;
-                int readTimeout = 3000;
+                // HttpURLConnection
+                HttpURLConnection conn = null;
+                String api_url = System.getenv("COCKTAIL_API");
 
-                String sendData = AD_user.toString();                        // 대다수의 경우 JSON 데이터 사용
-                String apiUrl = api_url + "/api/account/" + accountSeq + "/user";    // 각자 상황에 맞는 IP & url 사용
+                String send = AD_user.toString();
+                String apiUrl = api_url + "/api/account/" + accountSeq + "/user";
 
                 try
                 {
                     url = new URL(apiUrl);
 
-                    urlConnection = (HttpURLConnection)url.openConnection();
-                    urlConnection.setRequestMethod("POST");
-                    urlConnection.setConnectTimeout(connTimeout);
-                    urlConnection.setReadTimeout(readTimeout);
-                    urlConnection.setRequestProperty("user-id", "1");
-                    urlConnection.setRequestProperty("user-role", "ADMIN");
-                    urlConnection.setRequestProperty("Content-Type", "application/json;");
-                    urlConnection.setDoOutput(true);
-                    urlConnection.setInstanceFollowRedirects(true);
+                    //method POST
+                    conn = (HttpURLConnection)url.openConnection();
+                    conn.setRequestMethod("POST");
+                    
+                    //타임 아웃 설정
+                    conn.setConnectTimeout(3000);
+                    conn.setReadTimeout(3000);
 
-                    outputStream = urlConnection.getOutputStream();
+                    //header setting
+                    conn.setRequestProperty("user-id", "1");
+                    conn.setRequestProperty("user-role", "ADMIN");
+                    conn.setRequestProperty("Content-Type", "application/json;");
+                    conn.setDoOutput(true);
+                    conn.setInstanceFollowRedirects(true);
 
-                    bufferedWriter = new BufferedWriter(new OutputStreamWriter(outputStream,"UTF-8"));
-                    bufferedWriter.write(sendData);
-                    bufferedWriter.flush();
+                    out = conn.getOutputStream();
 
-                    buffer = new StringBuilder();
-                    if(urlConnection.getResponseCode() == HttpURLConnection.HTTP_OK)
+                    bw = new BufferedWriter(new OutputStreamWriter(out,"UTF-8"));
+                    bw.write(send);
+                    bw.flush();
+
+                    sb = new StringBuilder();
+                    if(conn.getResponseCode() == 200)
                     {
-                        bufferedReader = new BufferedReader(new InputStreamReader(urlConnection.getInputStream(),"UTF-8"));
-                        while((readLine = bufferedReader.readLine()) != null)
+                        br = new BufferedReader(new InputStreamReader(conn.getInputStream(),"UTF-8"));
+                        while((readLine = br.readLine()) != null)
                         {
-                            buffer.append(readLine).append("\n");
+                            sb.append(readLine).append("\n");
                         }
                     }
                     else
                     {
-                        buffer.append("\"code\" : \""+urlConnection.getResponseCode()+"\"");
-                        buffer.append(", \"message\" : \""+urlConnection.getResponseMessage()+"\"");
+                        sb.append("code : " + conn.getResponseCode() + "\n" + "message : " + conn.getResponseMessage());
                     }
                 }
                 catch(Exception ex)
@@ -97,9 +109,9 @@ public class apiAdd extends Thread {
                 {
                     try
                     {
-                        if (bufferedWriter != null) { bufferedWriter.close(); }
-                        if (outputStream != null) { outputStream.close(); }
-                        if (bufferedReader != null) { bufferedReader.close(); }
+                        if (bw != null) { bw.close(); }
+                        if (out != null) { out.close(); }
+                        if (br != null) { br.close(); }
                     }
                     catch(Exception ex)
                     {
@@ -108,7 +120,7 @@ public class apiAdd extends Thread {
                 }
 
                 new_userid = ((getAPI) apiUser_get).get_API(accountSeq);
-                ((userInactive) apiUser_inactive).user_Inactive(new_userid, update_data, accountSeq);
+                ((userInactive) apiUser_inactive).user_Inactive(new_userid, update, accountSeq);
             }
         }
         /*JSONObject new_userid;

@@ -72,7 +72,7 @@ public class getAD extends Thread {
         }
 
         // test
-        System.out.println(sb);
+        //System.out.println(sb);
 
 
         //JSONParser
@@ -113,14 +113,14 @@ public class getAD extends Thread {
                 }
                 
                 //test
-                System.out.println(username + firstName + lastName);
+                //System.out.println(username + lastName + firstName);
 
             }
             else {
                 System.out.println("=== 서버 응답이 안됨 ===");
             }
         }
-        System.out.println(Datas);
+        //System.out.println(Datas);
         return  Datas; //get_ADUsers
     }
 
