@@ -9,10 +9,32 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.util.Arrays;
+
+/**
+ *
+ * @section 작성정보
+ *  - author 개발3실
+ *  - version 1.0
+ *  - since 2023.05.15
+ * @section Class
+ *  - Class : getCluster
+ *  - Description : JSONObject get_ClusterSeq() 이용한 Class
+ * @section : 수정 정보
+ *  - 수정일 : 2023.05.15
+ *  - 수정자 : 정현서
+ *  - 수정 내용 : 최초생성
+ */
 
 //클러스터 현황 목록 조회
 public class getCluster extends Thread {
+
+    /**
+     * 클러스터 현황 목록을 조회합니다.
+     * @Description 클러스터의 accountSeq 정보를 알아냅니다.
+     * @return
+     * @throws ParseException
+     */
+
     public static JSONObject get_ClusterSeq() throws ParseException{
         //COCKTAIL_API
         URL url = null;

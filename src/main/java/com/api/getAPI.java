@@ -10,7 +10,31 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
+/**
+ *
+ * @section 작성정보
+ *  - author 개발3실
+ *  - version 1.0
+ *  - since 2023.05.15
+ * @section Class
+ *  - Class : getADUsers
+ *  - Description : JSONObject get_ADUsers() 이용한 Class
+ * @section : 수정 정보
+ *  - 수정일 : 2023.05.15
+ *  - 수정자 : 정현서
+ *  - 수정 내용 : 최초생성
+ */
+
 public class getAPI extends Thread{
+
+    /**
+     * cocktail api 서버의 사용자 목록을 조회합니다.
+     *
+     * @param accountSeq getCluster의 accountSeq 정보입니다.
+     * @return
+     * @throws ParseException
+     */
+
     public static JSONObject get_API(String accountSeq) throws ParseException {
         //COCKTAIL_API
         URL url = null;

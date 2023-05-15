@@ -12,8 +12,28 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.Arrays;
 
-public class getAD extends Thread {
+/**
+ *
+ * @section 작성정보
+ *  - author 개발3실
+ *  - version 1.0
+ *  - since 2023.05.15
+ * @section Class
+ *  - Class : getAD
+ *  - Description : JSONObject get_AD() 이용한 Class
+ * @section : 수정 정보
+ *  - 수정일 : 2023.05.15
+ *  - 수정자 : 정현서
+ *  - 수정 내용 : 최초생성
+ */
 
+
+public class getAD extends Thread {
+    /**
+     * 특정 부서의 AD 사용자 목록을 조회 합니다.
+     * @return
+     * @throws ParseException
+     */
     public static JSONObject get_AD() throws ParseException {
         //AD_URL
         URL url = null;
@@ -73,7 +93,6 @@ public class getAD extends Thread {
 
         // test
         //System.out.println(sb);
-
 
         //JSONParser
         JSONParser parser = new JSONParser();

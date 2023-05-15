@@ -9,7 +9,31 @@ import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
+/**
+ *
+ * @section 작성정보
+ *  - author 개발3실
+ *  - version 1.0
+ *  - since 2023.05.15
+ * @section Class
+ *  - Class : userModify
+ *  - Description : JSONObject user_Modify()에서 userId, Datas, accountSeq를 벋아서 사용
+ * @section : 수정 정보
+ *  - 수정일 : 2023.05.15
+ *  - 수정자 : 정현서
+ *  - 수정 내용 : 최초생성
+ */
+
 public class userModify extends Thread {
+
+    /**
+     *
+     * @param userId cocktail-server에서 가져온 사용자 정보를 참조합니다.
+     * @param Datas AD-Server에서 가져온 사용자 정보 데이터들을 참조합니다.
+     * @param accountSeq getCluster의 accountSeq 정보를 참조합니다.
+     * @throws ParseException
+     */
+
     public static void user_Modify(JSONObject userId, JSONObject Datas, String accountSeq) throws ParseException {
         // class
         Thread userInactive = new userInactive();
