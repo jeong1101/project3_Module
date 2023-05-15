@@ -21,7 +21,7 @@ public class userModify  extends Thread{
         JSONArray jsonarry1 = (JSONArray) jsonObj1.get("result");
         JSONObject update_data = new JSONObject();
         JSONArray roles = new JSONArray();
-        int num = 0;
+        int count = 0;
         roles.add(0, "DEVOPS");
 
         for (int i=0; i<jsonarry1.size(); i++){
@@ -40,9 +40,9 @@ public class userModify  extends Thread{
                 if(API_user_id.equals(AD_user_id)){
                     if (!API_user_department.equals(AD_user_department)){
                         System.out.println(AD_user);
-                        update_data.put(num, AD_user);
+                        update_data.put(count, AD_user);
                         AD_user.put("roles", roles);
-                        num = num + 1;
+                        count = count + 1;
 
                         URL url = null;
                         String readLine = null;
