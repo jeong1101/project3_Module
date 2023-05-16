@@ -59,7 +59,7 @@ public class userInactive extends Thread {
                     JSONObject inactive = new JSONObject();
                     inactive.put("inactiveYn", "Y");
                     inactive.put("userSeq",user.get("userSeq"));
-                    System.out.println(inactive);
+                   // System.out.println(inactive);
                     
                     //API 호출 위한 URL 연결
                     //COCKTAIL_API

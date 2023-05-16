@@ -1,6 +1,5 @@
 package com.api;
 
-import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
 public class Main2 {
@@ -14,7 +13,7 @@ public class Main2 {
         Thread getAPI = new getAPI();
         Thread getad = new getAD();
         Thread clusterSeq = new getCluster();
-        //Thread inactive = new userInactive();
+        Thread inactive = new userInactive();
         Thread add = new apiAdd();
         Thread modify = new userModify();
 
