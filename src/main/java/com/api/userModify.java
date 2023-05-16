@@ -52,7 +52,7 @@ public class userModify extends Thread {
         JSONObject update = new JSONObject();
         JSONArray roles = new JSONArray();
         int count = 0;
-        roles.add(0, "DEV"); // DEV 추가
+        roles.add(0, "DEVOPS"); // DEV 추가
 
         for (Object obj : jsonarry1) {
             //API 사용자 정보 정보
