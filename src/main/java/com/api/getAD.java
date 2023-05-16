@@ -121,6 +121,7 @@ public class getAD extends Thread {
                     }
                 }
 
+
                 for (int j=0; j<Department2.length; j ++){
                     if (department.equals(Department2[j])){
                         data.put("userId",username);
@@ -132,15 +133,16 @@ public class getAD extends Thread {
                 }
                 
                 //test
-                //System.out.println(username + lastName + firstName);
-
+                System.out.println("Department2" + Department2);
+                System.out.println(username + lastName + firstName);
+                System.out.println("department => " + department);
             }
             else {
                 System.out.println("=== 서버 응답이 안됨 ===");
             }
         }
-        //System.out.println(Datas);
-        return  Datas; //get_ADUsers
+        System.out.println("Datas => " + Datas);
+        return  Datas; //get_AD
     }
 
 }

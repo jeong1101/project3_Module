@@ -143,6 +143,7 @@ public class apiAdd extends Thread {
 
                 new_userid = ((getAPI) apiUser_get).get_API(accountSeq);
                 ((userInactive) apiUser_inactive).user_Inactive(new_userid, update, accountSeq);
+                System.out.println(new_userid);
             }
         }
     }
