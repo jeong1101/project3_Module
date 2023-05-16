@@ -90,7 +90,7 @@ public class getADUsers extends Thread{
         }
 
         // test
-        System.out.println(sb);
+        //System.out.println(sb);
 
         //JSONParser
         JSONParser parser = new JSONParser();
@@ -108,7 +108,7 @@ public class getADUsers extends Thread{
                 String lastName = jsonObject.get("lastName").toString();
 
                 //test
-                System.out.println(username + firstName + lastName);
+                //System.out.println(username + firstName + lastName);
 
                 if (jsonObject.containsKey("attributes")) {
                     JSONArray jsonArray1 = (JSONArray) jsonObject1.get("LDAP_ENTRY_DN");

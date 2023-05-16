@@ -40,7 +40,7 @@ public class getAD extends Thread {
         String adUrl = System.getenv("AD_URL");
 
         // 특정 부서 선태
-        String Department = System.getenv("DEPARTMENT");
+        var Department = System.getenv("DEPARTMENT");
         String[] Department2 = Department.split(",");
         System.out.println(Arrays.toString(Department2));
 
@@ -112,30 +112,29 @@ public class getAD extends Thread {
 
                 JSONArray jsonArray = (JSONArray) jsonObject1.get("LDAP_ENTRY_DN");
 
-                String department = "";
                 if(jsonArray != null && jsonArray.size() > 0){
                     String dev = jsonArray.get(0).toString();
                     String[] arrStr = dev.split(",");
                     if (arrStr.length>1){
-                        department = arrStr[1].substring(3);
+                        Department = arrStr[1].substring(3);
+                        //System.out.println(department);
                     }
                 }
 
 
                 for (int j=0; j<Department2.length; j ++){
-                    if (department.equals(Department2[j])){
+                    if (Department.equals(Department2[j])){
                         data.put("userId",username);
                         data.put("userName", lastName + firstName);
-                        data.put("userDepartment", department);
+                        data.put("userDepartment", Department);
                         Datas.put(count, data);
                         count++;
                     }
                 }
                 
                 //test
-                System.out.println("Department2" + Department2);
-                System.out.println(username + lastName + firstName);
-                System.out.println("department => " + department);
+                //System.out.println(username + lastName + firstName);
+                //System.out.println("department => " + department);
             }
             else {
                 System.out.println("=== 서버 응답이 안됨 ===");
