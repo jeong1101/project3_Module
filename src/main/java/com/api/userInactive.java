@@ -96,7 +96,7 @@ public class userInactive extends Thread {
                         conn.setRequestProperty("user-id", "136");
                         conn.setRequestProperty("user-role", "SYSTEM");
                         conn.setRequestProperty("Content-type","application/json");
-
+                        conn.setDoOutput(true);
 
                         out = conn.getOutputStream();
 
