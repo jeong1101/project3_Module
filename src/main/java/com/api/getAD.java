@@ -134,8 +134,8 @@ public class getAD extends Thread {
                 }
 
                 //test
-                //System.out.println(username + lastName + firstName);
-                //System.out.println("department => " + department);
+                System.out.println(username + lastName + firstName);
+                System.out.println("department => " + Department);
             }
             else {
                 System.out.println("=== 서버 응답이 안됨 ===");

@@ -57,7 +57,7 @@ public class userInactive extends Thread {
                 if (api_Id.equals(ad_Id)){
                     // 사용자 비활성화 정보 생성
                     JSONObject inactive = new JSONObject();
-                    inactive.put("inactiveYn", "Y");
+                    inactive.put("inactiveYn", "N");
                     inactive.put("userSeq",user.get("userSeq"));
                     System.out.println(inactive);
                     
