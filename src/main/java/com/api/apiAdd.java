@@ -17,7 +17,7 @@ import java.net.URL;
  *  - since 2023.05.15
  * @section Class
  *  - Class : apiAdd
- *  - Description : JSONObject add_API()에서 userId, Datas, accountSeq를 벋아서 사용
+ *  - Description : JSONObject add_API()에서 userId, Datas, accountSeq를 받아서 사용
  * @section : 수정 정보
  *  - 수정일 : 2023.05.15
  *  - 수정자 : 정현서
@@ -27,7 +27,7 @@ import java.net.URL;
 public class apiAdd extends Thread {
 
     /**
-     * 특정 부서를 추가합니다.
+     * 특정 사용자 부서를 추가합니다.
      *
      * @param userId cocktail-server에서 가져온 사용자 정보를 참조합니다.
      * @param Datas AD-Server에서 가져온 사용자 정보 데이터들을 참조합니다.
@@ -37,7 +37,7 @@ public class apiAdd extends Thread {
 
     public static void add_API(JSONObject userId, JSONObject Datas, String accountSeq) throws ParseException {
         //JSONObject
-        JSONObject new_userid;
+        JSONObject new_id;
 
         //참조 class
         Thread apiUser_inactive = new userInactive();
@@ -142,8 +142,8 @@ public class apiAdd extends Thread {
                     }
                 }
 
-                new_userid = ((getAPI) apiUser_get).get_API(accountSeq);
-                ((userInactive) apiUser_inactive).user_Inactive(new_userid, update, accountSeq);
+                new_id = ((getAPI) apiUser_get).get_API(accountSeq);
+                ((userInactive) apiUser_inactive).user_Inactive(new_id, update, accountSeq);
             }
         }
     }
