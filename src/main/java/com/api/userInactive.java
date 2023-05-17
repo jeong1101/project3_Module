@@ -53,13 +53,13 @@ public class userInactive extends Thread {
             for (Object ad_obj : jsonObject1.values()){
                 JSONObject ad = (JSONObject) ad_obj;
                 String ad_Id = ad.get("userId").toString();
-                
+
                 if (api_Id.equals(ad_Id)){
                     // 사용자 비활성화 정보 생성
                     JSONObject inactive = new JSONObject();
                     inactive.put("inactiveYn", "Y");
                     inactive.put("userSeq",user.get("userSeq"));
-                   // System.out.println(inactive);
+                    //System.out.println(inactive);
                     
                     //API 호출 위한 URL 연결
                     //COCKTAIL_API
@@ -96,7 +96,7 @@ public class userInactive extends Thread {
                         conn.setRequestProperty("user-id", "136");
                         conn.setRequestProperty("user-role", "SYSTEM");
                         conn.setRequestProperty("Content-type","application/json");
-                        conn.setDoOutput(true);
+                        conn.setDoOutput(true); // conn 오류해결
 
                         out = conn.getOutputStream();
 
@@ -136,9 +136,6 @@ public class userInactive extends Thread {
                             e.printStackTrace();
                         }//catch
                     }
-
-                    System.out.println("sb => " + sb.toString());
-
                 }
             }
         }
