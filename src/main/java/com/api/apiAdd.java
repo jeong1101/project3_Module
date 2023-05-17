@@ -27,6 +27,7 @@ import java.net.URL;
 public class apiAdd extends Thread {
 
     /**
+     * 특정 부서를 추가합니다.
      *
      * @param userId cocktail-server에서 가져온 사용자 정보를 참조합니다.
      * @param Datas AD-Server에서 가져온 사용자 정보 데이터들을 참조합니다.
@@ -54,11 +55,11 @@ public class apiAdd extends Thread {
         for (int i=0; i<jsonObj2.size(); i++){
             int count = 0;
             JSONObject AD = (JSONObject) jsonObj2.get(Integer.toString(i));
-            String AD_user_id = AD.get("userId").toString();
+            String AD_id = AD.get("userId").toString();
             for (int j=0; j<jsonarry1.size(); j++){
                 JSONObject API_user = (JSONObject) jsonarry1.get(Integer.parseInt(Integer.toString(j)));
                 String API_user_id = API_user.get("userId").toString();
-                if (API_user_id.equals(AD_user_id)){
+                if (API_user_id.equals(AD_id)){
                     count = count + 1;
                 }
             }

@@ -17,8 +17,8 @@ import java.net.URL;
  *  - version 1.0
  *  - since 2023.05.15
  * @section Class
- *  - Class : getADUsers
- *  - Description : JSONObject get_ADUsers() 이용한 Class
+ *  - Class : getAPI
+ *  - Description : JSONObject get_API() 이용한 Class
  * @section : 수정 정보
  *  - 수정일 : 2023.05.15
  *  - 수정자 : 정현서

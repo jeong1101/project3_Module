@@ -16,6 +16,7 @@ public class Main2 {
         Thread inactive = new userInactive();
         Thread add = new apiAdd();
         Thread modify = new userModify();
+        System.out.println("inactive =>>> " + inactive);
 
         try {
             // 클러스터 시퀀스 값
@@ -36,6 +37,9 @@ public class Main2 {
 
                 // 사용자 부서 변경
                 ((userModify) modify).user_Modify(userId, Datas, accountSeq);
+
+                //사용자 inactive
+
 
             }
             System.out.println("-------- end ---------");

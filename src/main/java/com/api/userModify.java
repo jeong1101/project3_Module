@@ -28,7 +28,7 @@ public class userModify extends Thread {
 
     /**
      *
-     * 사용자 부서명을 수정한다.
+     * 사용자 부서명을 수정합니다.
      *
      * @param userId cocktail-server에서 가져온 사용자 정보를 참조합니다.
      * @param Datas AD-Server에서 가져온 사용자 정보 데이터들을 참조합니다.
