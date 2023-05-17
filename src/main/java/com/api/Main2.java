@@ -39,7 +39,7 @@ public class Main2 {
                 ((userModify) modify).user_Modify(userId, Datas, accountSeq);
 
                 //사용자 inactive
-
+                ((userInactive) inactive).user_Inactive(userId,Datas,accountSeq);
 
             }
             System.out.println("-------- end ---------");
