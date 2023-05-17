@@ -38,8 +38,6 @@ public class Main2 {
                 // 사용자 부서 변경
                 ((userModify) modify).user_Modify(userId, Datas, accountSeq);
 
-                //사용자 inactive
-                ((userInactive) userInactive).user_Inactive(userId, Datas, accountSeq);
             }
             System.out.println("-------- end ---------");
 
