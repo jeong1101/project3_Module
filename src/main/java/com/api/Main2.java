@@ -13,10 +13,10 @@ public class Main2 {
         Thread getAPI = new getAPI();
         Thread getad = new getAD();
         Thread clusterSeq = new getCluster();
-        Thread inactive = new userInactive();
+        Thread userInactive = new userInactive();
         Thread add = new apiAdd();
         Thread modify = new userModify();
-        System.out.println("inactive =>>> " + inactive);
+        System.out.println("inactive =>>> " + userInactive);
 
         try {
             // 클러스터 시퀀스 값
@@ -39,8 +39,7 @@ public class Main2 {
                 ((userModify) modify).user_Modify(userId, Datas, accountSeq);
 
                 //사용자 inactive
-                ((userInactive) inactive).user_Inactive(userId,Datas,accountSeq);
-
+                ((userInactive) userInactive).user_Inactive(userId, Datas, accountSeq);
             }
             System.out.println("-------- end ---------");
 
